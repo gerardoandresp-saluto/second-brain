@@ -532,6 +532,44 @@ else
 fi
 
 # ══════════════════════════════════════════════════════════════════════
+# 7. REGISTER OBSIDIAN VAULT
+# ══════════════════════════════════════════════════════════════════════
+echo ""
+echo "── Obsidian Vault Registration ──────────────────────────"
+
+OBSIDIAN_CONFIG="$HOME/Library/Application Support/obsidian/obsidian.json"
+VAULT_DISPLAY_NAME=".brain_${PROJECT_NAME}"
+VAULT_PATH="$BRAIN_DIR"
+
+if [ -f "$OBSIDIAN_CONFIG" ] && command -v jq &>/dev/null; then
+    # Check if vault path is already registered
+    EXISTING=$(jq -r --arg path "$VAULT_PATH" '.vaults | to_entries[] | select(.value.path == $path) | .key' "$OBSIDIAN_CONFIG" 2>/dev/null)
+
+    if [ -n "$EXISTING" ]; then
+        print_info "Vault already registered in Obsidian as $VAULT_DISPLAY_NAME"
+    else
+        # Generate a random vault ID (16 hex chars, matching Obsidian's format)
+        VAULT_ID=$(LC_ALL=C tr -dc 'a-f0-9' < /dev/urandom | head -c 16)
+        TIMESTAMP=$(date +%s)000
+
+        # Add vault entry
+        UPDATED=$(jq --arg id "$VAULT_ID" --arg path "$VAULT_PATH" --arg ts "$TIMESTAMP" \
+            '.vaults[$id] = {"path": $path, "ts": ($ts | tonumber)}' "$OBSIDIAN_CONFIG")
+        echo "$UPDATED" > "$OBSIDIAN_CONFIG"
+        print_success "Vault registered in Obsidian as $VAULT_DISPLAY_NAME"
+        print_info "Restart Obsidian or open vault switcher to see it"
+    fi
+else
+    if [ ! -f "$OBSIDIAN_CONFIG" ]; then
+        print_info "Obsidian not detected — open the vault manually:"
+        print_info "  Open Obsidian → Open folder as vault → $VAULT_PATH"
+    else
+        print_warning "jq not found — register vault manually in Obsidian"
+        print_info "  Open Obsidian → Open folder as vault → $VAULT_PATH"
+    fi
+fi
+
+# ══════════════════════════════════════════════════════════════════════
 # DONE
 # ══════════════════════════════════════════════════════════════════════
 echo ""
@@ -539,26 +577,23 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 print_success "Second Brain initialization complete!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
+echo "  Vault name in Obsidian: $VAULT_DISPLAY_NAME"
+echo ""
 echo "  Next Steps:"
 echo ""
 echo "  1. Open the vault in Obsidian:"
-echo "     Open Obsidian → Open folder as vault → select .brain/"
+echo "     obsidian open vault=\"$VAULT_DISPLAY_NAME\" path=\"00-home/index.md\""
 echo ""
 echo "  2. Start your first session:"
-echo "     Read .brain/00-home/index.md"
+echo "     cd $TARGET_DIR && claude"
 echo "     The session rhythm is: Orient → Work → Persist"
 echo ""
 echo "  3. Memory routing is active:"
-echo "     Brain hooks will auto-suggest relevant memories on each prompt"
-echo "     The index auto-rebuilds when you write to .brain/ files"
+echo "     Brain hooks auto-suggest relevant memories on each prompt"
+echo "     The index auto-rebuilds when you write to brain files"
 echo ""
 echo "  4. MCP servers have been configured in .mcp.json"
 echo "     Restart Claude Code to pick up the new configuration"
-echo ""
-echo "  5. Optional: Install Obsidian community plugins"
-echo "     - Dataview (dynamic queries)"
-echo "     - Smart Connections (semantic search)"
-echo "     - Templater (advanced templates)"
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
