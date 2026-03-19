@@ -2,6 +2,11 @@
 type: home
 tags:
   - MOC
+keywords:
+  - home
+  - navigation
+  - entry
+  - index
 ---
 
 # Second Brain — Home

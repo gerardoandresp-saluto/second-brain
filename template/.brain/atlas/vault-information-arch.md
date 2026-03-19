@@ -3,6 +3,12 @@ type: atlas
 tags:
   - atlas
   - meta
+keywords:
+  - vault
+  - structure
+  - architecture
+  - conventions
+  - rules
 ---
 
 # Vault Information Architecture

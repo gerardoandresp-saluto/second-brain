@@ -3,6 +3,11 @@ type: atlas
 tags:
   - MOC
   - atlas
+keywords:
+  - research
+  - threads
+  - exploration
+  - investigation
 ---
 
 # Research

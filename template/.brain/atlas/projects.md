@@ -3,6 +3,11 @@ type: atlas
 tags:
   - MOC
   - atlas
+keywords:
+  - projects
+  - active
+  - paused
+  - completed
 ---
 
 # Projects

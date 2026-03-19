@@ -2,6 +2,12 @@
 type: home
 tags:
   - MOC
+keywords:
+  - active
+  - current
+  - focus
+  - status
+  - priorities
 ---
 
 # Top of Mind

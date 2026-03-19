@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated": "2026-03-19T05:48:48.763Z",
+  "updated": "2026-03-19T08:51:40.244Z",
   "note_count": 8,
   "entries": [
     {
@@ -10,6 +10,9 @@
         "MOC"
       ],
       "k": [
+        "home",
+        "navigation",
+        "entry",
         "index",
         "goal/mission",
         "goal/principles",
@@ -29,6 +32,11 @@
         "MOC"
       ],
       "k": [
+        "active",
+        "current",
+        "focus",
+        "status",
+        "priorities",
         "top",
         "mind"
       ]
@@ -41,7 +49,10 @@
         "atlas"
       ],
       "k": [
-        "projects"
+        "projects",
+        "active",
+        "paused",
+        "completed"
       ]
     },
     {
@@ -52,7 +63,10 @@
         "atlas"
       ],
       "k": [
-        "research"
+        "research",
+        "threads",
+        "exploration",
+        "investigation"
       ]
     },
     {
@@ -64,13 +78,13 @@
       ],
       "k": [
         "vault",
+        "structure",
+        "architecture",
+        "conventions",
+        "rules",
         "information",
         "arch",
-        "memory",
-        "graphs",
-        "beat",
-        "giant",
-        "files"
+        "memory"
       ],
       "l": [
         "memory graphs beat giant memory files",
