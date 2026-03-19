@@ -308,15 +308,14 @@ fi
 echo ""
 echo "── MCP Configuration ────────────────────────────────────"
 
-MCP_SERVERS="$FRAMEWORK_DIR/template/mcp-servers.json"
+MCP_SERVERS_TEMPLATE="$FRAMEWORK_DIR/template/mcp-servers.json"
+MCP_SERVERS=$(mktemp)
+sed "s|\.brain|${BRAIN_FOLDER_NAME}|g" "$MCP_SERVERS_TEMPLATE" > "$MCP_SERVERS"
 MCP_TARGET="$TARGET_DIR/.mcp.json"
 
 if [ ! -f "$MCP_TARGET" ]; then
     # No existing .mcp.json — create it
     print_info "Creating .mcp.json with Second Brain MCP servers..."
-
-    # Resolve absolute vault path for MCP servers
-    ABS_BRAIN_DIR="$TARGET_DIR/.brain"
 
     cat > "$MCP_TARGET" << MCPEOF
 {
