@@ -61,6 +61,7 @@ Links read as natural sentences:
 | `session` | `_assets/templates/session-log.md` | `sessions/` | episodic |
 | `ingested` | `_assets/templates/ingested-source.md` | `inbox/` then curated | semantic |
 | `project` | `_assets/templates/project-context.md` | `atlas/` or `knowledge/` | procedural |
+| `brain-eval` | `_assets/templates/brain-eval.md` | `knowledge/graph/agent-daily/` | episodic |
 
 ## Session Rhythm
 

@@ -468,6 +468,18 @@ if command -v jq &>/dev/null; then
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\$CLAUDE_PROJECT_DIR/${BRAIN_FOLDER_NAME}/hooks/session-eval-prompt.sh",
+            "timeout": 10000
+          }
+        ]
+      }
     ]
   }
 }
@@ -480,11 +492,13 @@ SETTINGSEOF
 
         ROUTER_HOOK="{\"matcher\":\"\",\"hooks\":[{\"type\":\"command\",\"command\":\"\$CLAUDE_PROJECT_DIR/${BRAIN_FOLDER_NAME}/hooks/brain-router.sh\",\"timeout\":5000}]}"
         UPDATER_HOOK="{\"matcher\":\"Write|Edit\",\"hooks\":[{\"type\":\"command\",\"command\":\"\$CLAUDE_PROJECT_DIR/${BRAIN_FOLDER_NAME}/hooks/brain-index-updater.sh\",\"timeout\":5000}]}"
+        EVAL_HOOK="{\"matcher\":\"\",\"hooks\":[{\"type\":\"command\",\"command\":\"\$CLAUDE_PROJECT_DIR/${BRAIN_FOLDER_NAME}/hooks/session-eval-prompt.sh\",\"timeout\":10000}]}"
 
         MERGED=$(jq \
             --argjson router "$ROUTER_HOOK" \
             --argjson updater "$UPDATER_HOOK" \
-            '.hooks.UserPromptSubmit = ((.hooks.UserPromptSubmit // []) + [$router]) | .hooks.PostToolUse = ((.hooks.PostToolUse // []) + [$updater])' \
+            --argjson eval "$EVAL_HOOK" \
+            '.hooks.UserPromptSubmit = ((.hooks.UserPromptSubmit // []) + [$router]) | .hooks.PostToolUse = ((.hooks.PostToolUse // []) + [$updater]) | .hooks.Stop = ((.hooks.Stop // []) + [$eval])' \
             "$SETTINGS_FILE")
 
         echo "$MERGED" > "$SETTINGS_FILE"

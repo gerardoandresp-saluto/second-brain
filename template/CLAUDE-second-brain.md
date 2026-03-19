@@ -140,6 +140,24 @@ Separate from the vault, Claude's own session memory lives at:
 
 This is Layer 1. Keep MEMORY.md there as a routing document. Detailed observations go in topic files (debugging.md, patterns.md, architecture.md, preferences.md) and get linked from MEMORY.md.
 
+### Self-Evaluation (THE BRAIN IMPROVES ITSELF)
+
+A `Stop` hook runs at the end of every session showing brain health metrics: orphan notes, missing keywords, stale top-of-mind, unfilled goals. Use this checklist to persist what you learned.
+
+**For significant sessions**, create a brain-eval note using the `brain-eval` template in `.brain/knowledge/graph/agent-daily/`. This tracks:
+- Router effectiveness (hits vs misses)
+- Knowledge graph health (coverage gaps, contradictions, stale notes)
+- Concrete recommendations (template changes, routing improvements, process improvements)
+
+**The evaluation loop:**
+1. Session ends → Stop hook shows health metrics
+2. Agent creates brain-eval note with specific recommendations
+3. Next session reads prior eval recommendations during Orient step
+4. Improvements are implemented (add keywords, link orphans, create missing notes)
+5. The brain gets better every session
+
+This is what killed every wiki — humans skip maintenance. Agents don't.
+
 ### Common Mistakes to Avoid
 
 - Treating CLAUDE.md like a settings file — it's a teaching document
