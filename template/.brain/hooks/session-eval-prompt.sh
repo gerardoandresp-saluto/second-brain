@@ -163,10 +163,20 @@ AUTO-PERSISTED:
   Session log: ${BRAIN_FOLDER_NAME}/sessions/${TODAY}-${TIMESTAMP}.md
   Last-session notes: ${BRAIN_FOLDER_NAME}/00-home/.last-session-notes
 
-BEFORE YOU STOP — you MUST:
-1. Fill in "What Happened" and "What Was Learned" in the session log
-2. Fill in "Router Misses" — what did you search for that the brain didn't find?
-3. Update ${BRAIN_FOLDER_NAME}/00-home/top-of-mind.md if anything changed
-4. Add keywords to any notes that should have been found but weren't
+STOP — PERSIST STEP REQUIRED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+You CANNOT end this session without completing these actions:
+
+1. Edit ${BRAIN_FOLDER_NAME}/sessions/${TODAY}-${TIMESTAMP}.md:
+   - Replace "TODO" in "What Happened" with a 2-3 sentence summary
+   - Replace "TODO" in "What Was Learned" with key insights
+   - Fill in "Router Misses" if the brain missed relevant notes
+
+2. Edit ${BRAIN_FOLDER_NAME}/00-home/top-of-mind.md:
+   - Update current phase if it changed
+   - Update active projects, open questions, blockers
+
+A session log with empty TODOs means the brain learned NOTHING.
+Do this NOW before you respond with anything else.
 
 EVALEOF

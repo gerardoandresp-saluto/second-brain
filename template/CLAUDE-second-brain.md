@@ -48,7 +48,9 @@ Every session follows this cycle. No exceptions.
    - Add keywords to any notes that should have been found but weren't
    - Never modify `goal/` without explicit user approval
 
-**The Stop hook guarantees a session log exists. Your job is to make it useful.** A session log with empty TODO sections is a wasted deposit. Fill it in BEFORE you stop.
+**The Stop hook guarantees a session log exists. Your job is to make it useful.**
+
+**CRITICAL: When the Stop hook fires and you see "SESSION END — BRAIN HEALTH CHECK", you are NOT done. You MUST complete the persist step before the session ends. Do NOT leave TODO sections empty. A session log with empty TODOs means the brain learned nothing — the entire session was wasted from a persistence standpoint. This is the single most important action you take.**
 
 ### Memory Routing (HOW TO FIND MEMORIES)
 
