@@ -40,9 +40,13 @@ Every session follows this cycle. No exceptions.
 
 1. **Orient** — Read this file. Read `.brain/goal/mission.md` (the north star). Read `.brain/00-home/top-of-mind.md`. Know what's active and WHY.
 2. **Work** — Operate with full accumulated context. Every decision should serve the goal.
-3. **Persist** — Write what you learned into the appropriate memory file, knowledge note, or session log. Update `top-of-mind.md` if priorities shifted. Never modify `goal/` without explicit user approval.
+3. **Persist (NOT OPTIONAL)** — When the session ends, a Stop hook auto-creates a session log in `.brain/sessions/`. You MUST:
+   - Fill in the "What Happened" and "What Was Learned" sections of the auto-generated session log
+   - Update `.brain/00-home/top-of-mind.md` if anything changed (phase, blockers, focus)
+   - Create knowledge claim notes for any significant insights discovered
+   - Never modify `goal/` without explicit user approval
 
-Skipping persist means the brain never improves. Every session is a deposit.
+**The Stop hook guarantees a session log exists. Your job is to make it useful.** A session log with empty TODO sections is a wasted deposit. Fill it in BEFORE you stop.
 
 ### Memory Routing (HOW TO FIND MEMORIES)
 
@@ -142,9 +146,13 @@ This is Layer 1. Keep MEMORY.md there as a routing document. Detailed observatio
 
 ### Self-Evaluation (THE BRAIN IMPROVES ITSELF)
 
-A `Stop` hook runs at the end of every session showing brain health metrics: orphan notes, missing keywords, stale top-of-mind, unfilled goals. Use this checklist to persist what you learned.
+The `Stop` hook does two things automatically:
+1. **Auto-creates a session log** in `.brain/sessions/` with health metrics and file modification history — this guarantees every session leaves a trace
+2. **Rebuilds the brain index** so new notes are immediately searchable next session
 
-**For significant sessions**, create a brain-eval note using the `brain-eval` template in `.brain/knowledge/graph/agent-daily/`. This tracks:
+**Your responsibility:** The auto-generated session log has TODO sections. Fill them in. An empty session log is a wasted deposit.
+
+**For significant sessions**, also create a brain-eval note using the `brain-eval` template in `.brain/knowledge/graph/agent-daily/`. This tracks:
 - Router effectiveness (hits vs misses)
 - Knowledge graph health (coverage gaps, contradictions, stale notes)
 - Concrete recommendations (template changes, routing improvements, process improvements)
