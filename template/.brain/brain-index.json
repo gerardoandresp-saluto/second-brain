@@ -1,11 +1,12 @@
 {
-  "version": "1.0.0",
-  "updated": "2026-03-19T08:51:40.244Z",
+  "version": "2.0.0",
+  "updated": "2026-03-19T10:51:25.475Z",
   "note_count": 8,
   "entries": [
     {
       "p": "00-home/index.md",
       "m": "working",
+      "moc": true,
       "t": [
         "MOC"
       ],
@@ -19,15 +20,32 @@
         "top",
         "mind"
       ],
+      "bk": [
+        "atlas",
+        "entry",
+        "goal",
+        "session",
+        "projects",
+        "research",
+        "vault",
+        "knowledge",
+        "second",
+        "brain"
+      ],
+      "s": "This is the entry point. Start here.",
       "l": [
         "goal/mission",
         "goal/principles",
-        "top-of-mind"
-      ]
+        "top-of-mind",
+        "atlas/projects",
+        "atlas/research"
+      ],
+      "lc": 7
     },
     {
       "p": "00-home/top-of-mind.md",
       "m": "working",
+      "moc": true,
       "t": [
         "MOC"
       ],
@@ -39,11 +57,25 @@
         "priorities",
         "top",
         "mind"
-      ]
+      ],
+      "bk": [
+        "active",
+        "mind",
+        "start",
+        "session",
+        "projects",
+        "open",
+        "questions",
+        "blocked",
+        "week",
+        "focus"
+      ],
+      "lc": 1
     },
     {
       "p": "atlas/projects.md",
       "m": "procedural",
+      "moc": true,
       "t": [
         "MOC",
         "atlas"
@@ -53,11 +85,22 @@
         "active",
         "paused",
         "completed"
-      ]
+      ],
+      "bk": [
+        "projects",
+        "tracked",
+        "project",
+        "context",
+        "active",
+        "paused",
+        "completed"
+      ],
+      "lc": 1
     },
     {
       "p": "atlas/research.md",
       "m": "procedural",
+      "moc": true,
       "t": [
         "MOC",
         "atlas"
@@ -67,11 +110,25 @@
         "threads",
         "exploration",
         "investigation"
-      ]
+      ],
+      "bk": [
+        "research",
+        "threads",
+        "knowledge",
+        "areas",
+        "active",
+        "completed",
+        "parking",
+        "ideas",
+        "worth",
+        "exploring"
+      ],
+      "lc": 1
     },
     {
       "p": "atlas/vault-information-arch.md",
       "m": "procedural",
+      "moc": true,
       "t": [
         "atlas",
         "meta"
@@ -84,12 +141,28 @@
         "rules",
         "information",
         "arch",
-        "memory"
+        "memory",
+        "graphs",
+        "beat"
       ],
+      "bk": [
+        "knowledge",
+        "memory",
+        "assets",
+        "templates",
+        "goal",
+        "daily",
+        "session",
+        "graph",
+        "research",
+        "brain"
+      ],
+      "s": "| Folder | Purpose |",
       "l": [
         "memory graphs beat giant memory files",
         "benchmark retrieval like search infrastructure"
-      ]
+      ],
+      "lc": 2
     },
     {
       "p": "docs/README.md",
@@ -103,7 +176,21 @@
         "reference",
         "guide",
         "readme"
-      ]
+      ],
+      "bk": [
+        "knowledge",
+        "docs",
+        "agents",
+        "brain",
+        "contains",
+        "reference",
+        "settled",
+        "graph",
+        "claims",
+        "authoritative"
+      ],
+      "s": "This folder contains **stable reference documentation** — settled knowledge that agents can consult at any time.",
+      "lc": 0
     },
     {
       "p": "goal/mission.md",
@@ -117,7 +204,20 @@
         "purpose",
         "vision",
         "objective"
-      ]
+      ],
+      "bk": [
+        "project",
+        "mission",
+        "saying",
+        "define",
+        "north",
+        "star",
+        "thing",
+        "doesn",
+        "change",
+        "statement"
+      ],
+      "lc": 1
     },
     {
       "p": "goal/principles.md",
@@ -131,7 +231,20 @@
         "values",
         "approach",
         "philosophy"
-      ]
+      ],
+      "bk": [
+        "core",
+        "principles",
+        "guide",
+        "every",
+        "decision",
+        "options",
+        "seem",
+        "equal",
+        "break",
+        "problems"
+      ],
+      "lc": 1
     }
   ]
 }

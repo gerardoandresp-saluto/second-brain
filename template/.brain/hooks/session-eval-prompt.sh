@@ -107,16 +107,42 @@ _TODO: Fill in what was accomplished this session._
 
 _TODO: Fill in key insights that should become knowledge claims._
 
+## Router Misses
+
+_List any queries where the brain-router returned irrelevant results or found nothing:_
+- Query: "" → Expected: "" → Got: ""
+
+_Keywords to add to existing notes based on misses:_
+-
+
 ## Persisted To Memory
 
 - [ ] top-of-mind.md updated
 - [ ] Knowledge claims created for new insights
+- [ ] Router misses addressed (keywords added to notes)
 - [ ] Auto-memory updated if project context changed
 SESSIONEOF
 fi
 
+# ── Write .last-session-notes for cross-session surfacing ────────────
+LAST_SESSION_FILE="$BRAIN_DIR/00-home/.last-session-notes"
+RECENT_KNOWLEDGE=$(find "$BRAIN_DIR/knowledge" "$BRAIN_DIR/docs" "$BRAIN_DIR/sessions" \
+  -name "*.md" -mmin -120 -type f 2>/dev/null | while read f; do
+  relpath=$(echo "$f" | sed "s|$BRAIN_DIR/||")
+  name=$(basename "$f" .md)
+  echo "- [[$name]] → $relpath"
+done)
+
+if [ -n "$RECENT_KNOWLEDGE" ]; then
+  cat > "$LAST_SESSION_FILE" << LASTEOF
+# Last Session Notes (auto-generated)
+_Created: ${TODAY} ${TIMESTAMP}. Read these during Orient._
+
+${RECENT_KNOWLEDGE}
+LASTEOF
+fi
+
 # ── Rebuild Brain Index ──────────────────────────────────────────────
-# Ensure the index captures any notes created during the session
 if command -v node &>/dev/null; then
   "$BRAIN_DIR/hooks/rebuild-brain-index.sh" "$BRAIN_DIR" 2>/dev/null &
 fi
@@ -134,11 +160,13 @@ Top-of-mind stale:     ${TOM_STALE}
 Goal defined:          ${GOAL_EXISTS}
 
 AUTO-PERSISTED:
-  Session log created: ${BRAIN_FOLDER_NAME}/sessions/${TODAY}-${TIMESTAMP}.md
+  Session log: ${BRAIN_FOLDER_NAME}/sessions/${TODAY}-${TIMESTAMP}.md
+  Last-session notes: ${BRAIN_FOLDER_NAME}/00-home/.last-session-notes
 
-BEFORE YOU STOP — the session log above has TODO sections.
-You MUST fill in "What Happened" and "What Was Learned" now.
-You MUST update ${BRAIN_FOLDER_NAME}/00-home/top-of-mind.md if anything changed.
-These are not optional. The brain only improves if you persist.
+BEFORE YOU STOP — you MUST:
+1. Fill in "What Happened" and "What Was Learned" in the session log
+2. Fill in "Router Misses" — what did you search for that the brain didn't find?
+3. Update ${BRAIN_FOLDER_NAME}/00-home/top-of-mind.md if anything changed
+4. Add keywords to any notes that should have been found but weren't
 
 EVALEOF
