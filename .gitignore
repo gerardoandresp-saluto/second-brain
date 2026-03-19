@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Obsidian - workspace is machine-specific, don't track
+template/.brain/.obsidian/workspace.json
+template/.brain/.obsidian/workspace-mobile.json
+template/.brain/.obsidian/plugins/*/data.json
+
+# Cache
+template/.brain/.obsidian/cache
+template/.brain/.trash/
+
+# Claude local settings
+.claude/settings.local.json

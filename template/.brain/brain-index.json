@@ -1,0 +1,123 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-03-19T05:48:48.763Z",
+  "note_count": 8,
+  "entries": [
+    {
+      "p": "00-home/index.md",
+      "m": "working",
+      "t": [
+        "MOC"
+      ],
+      "k": [
+        "index",
+        "goal/mission",
+        "goal/principles",
+        "top",
+        "mind"
+      ],
+      "l": [
+        "goal/mission",
+        "goal/principles",
+        "top-of-mind"
+      ]
+    },
+    {
+      "p": "00-home/top-of-mind.md",
+      "m": "working",
+      "t": [
+        "MOC"
+      ],
+      "k": [
+        "top",
+        "mind"
+      ]
+    },
+    {
+      "p": "atlas/projects.md",
+      "m": "procedural",
+      "t": [
+        "MOC",
+        "atlas"
+      ],
+      "k": [
+        "projects"
+      ]
+    },
+    {
+      "p": "atlas/research.md",
+      "m": "procedural",
+      "t": [
+        "MOC",
+        "atlas"
+      ],
+      "k": [
+        "research"
+      ]
+    },
+    {
+      "p": "atlas/vault-information-arch.md",
+      "m": "procedural",
+      "t": [
+        "atlas",
+        "meta"
+      ],
+      "k": [
+        "vault",
+        "information",
+        "arch",
+        "memory",
+        "graphs",
+        "beat",
+        "giant",
+        "files"
+      ],
+      "l": [
+        "memory graphs beat giant memory files",
+        "benchmark retrieval like search infrastructure"
+      ]
+    },
+    {
+      "p": "docs/README.md",
+      "m": "reference",
+      "t": [
+        "docs",
+        "reference"
+      ],
+      "k": [
+        "documentation",
+        "reference",
+        "guide",
+        "readme"
+      ]
+    },
+    {
+      "p": "goal/mission.md",
+      "m": "goal",
+      "t": [
+        "goal",
+        "mission"
+      ],
+      "k": [
+        "mission",
+        "purpose",
+        "vision",
+        "objective"
+      ]
+    },
+    {
+      "p": "goal/principles.md",
+      "m": "goal",
+      "t": [
+        "goal",
+        "principles"
+      ],
+      "k": [
+        "principles",
+        "values",
+        "approach",
+        "philosophy"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "smart-connections": {
+    "command": "npx",
+    "args": ["-y", "smart-connections-mcp"],
+    "env": {
+      "VAULT_PATH": ".brain"
+    }
+  },
+  "qmd": {
+    "command": "npx",
+    "args": ["-y", "@tobilu/qmd", "mcp"]
+  },
+  "obsidian-mcp": {
+    "command": "npx",
+    "args": ["-y", "obsidian-mcp"]
+  }
+}
