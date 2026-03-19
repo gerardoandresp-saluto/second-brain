@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Repository URL for cloning when run via curl
-REPO_URL="https://github.com/YOUR_USERNAME/second-brain-project.git"
+REPO_URL="https://github.com/gerardoandresp-saluto/second-brain.git"
 
 # Section markers for CLAUDE.md integration
 SECTION_START="<!-- SECOND-BRAIN-FRAMEWORK:START -->"

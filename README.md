@@ -13,13 +13,13 @@ The portability is the **system itself**, not the data.
 ### From GitHub (one command)
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/YOUR_USERNAME/second-brain-project/main/scripts/init-second-brain.sh | bash -s -- /path/to/your/project
+curl -sSL https://raw.githubusercontent.com/gerardoandresp-saluto/second-brain/main/scripts/init-second-brain.sh | bash -s -- /path/to/your/project
 ```
 
 ### From local clone
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/second-brain-project.git
+git clone https://github.com/gerardoandresp-saluto/second-brain.git
 cd second-brain-project
 ./scripts/init-second-brain.sh /path/to/your/project
 ```
