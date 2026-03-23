@@ -25,6 +25,12 @@ STATE_DIR="$HOOKS_DIR/.state"
 BRAIN_NAME="$(basename "$BRAIN_DIR")"
 mkdir -p "$STATE_DIR" 2>/dev/null
 
+# ── Error logging ─────────────────────────────────────────────────
+LOG_FILE="$STATE_DIR/hook-errors.log"
+log_error() {
+  echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] session-orient: $1" >> "$LOG_FILE" 2>/dev/null
+}
+
 # ── Session start detection ─────────────────────────────────────────
 SESSION_ACTIVE="$STATE_DIR/session-active"
 SESSION_START_TS="$STATE_DIR/session-start-ts"
@@ -126,7 +132,7 @@ if [ -n "$USER_PROMPT" ] && [ -f "$BRAIN_DIR/brain-index.json" ]; then
     # Convert newline-separated words to space-separated args
     KEYWORD_ARGS=$(echo "$KEYWORDS" | tr '\n' ' ')
 
-    RESULTS=$(node "$HOOKS_DIR/brain-search.mjs" "$BRAIN_DIR" $KEYWORD_ARGS 2>/dev/null)
+    RESULTS=$(node "$HOOKS_DIR/brain-search.mjs" "$BRAIN_DIR" $KEYWORD_ARGS 2>&1) || log_error "brain-search.mjs failed for keywords: $KEYWORD_ARGS"
 
     # Check if we got results with scores above threshold
     MATCH_COUNT=$(echo "$RESULTS" | node -e "

@@ -19,6 +19,7 @@ scripts/
   init-second-brain.sh           — The installer (7-step pipeline, see below)
   bootstrap-scan.mjs             — Scans target project, outputs JSON manifest
   bootstrap-populate.mjs         — Populates brain from manifest (--bootstrap flag)
+  auto-populate-prompt.mjs       — Generates auto-populate prompt (--auto flag)
 
 template/
   .brain/                        — The vault template (what gets installed)
@@ -32,32 +33,54 @@ tests/                           — Test suite (Node.js + shell)
 
 ## Init Script Pipeline
 
-`init-second-brain.sh` runs 7 steps in order:
+```bash
+./scripts/init-second-brain.sh [--bootstrap] [--auto] /path/to/project
+```
+
+Flags:
+- `--bootstrap` — scan project and auto-populate brain from README, package.json, git history, ADRs, etc.
+- `--auto` — implies `--bootstrap` plus runs the auto-populate prompt generator (`auto-populate-prompt.mjs`)
+
+The script runs 7 steps in order:
 1. Copy vault structure (`.brain/` → `.brain_<project-name>/`)
-2. Bootstrap scan+populate (optional, `--bootstrap` flag)
+2. Bootstrap scan+populate (optional, requires `--bootstrap` or `--auto`)
 3. CLAUDE.md integration (create/append/update using `<!-- SECOND-BRAIN-FRAMEWORK:START/END -->` markers)
 4. MCP config merge (`.mcp.json`)
 5. Hooks configuration (merges into `.claude/settings.json`)
 6. Build brain index (`brain-index.json`)
 7. Register Obsidian vault (macOS `obsidian.json`)
 
-The vault directory is named `.brain_<project-name>` (derived from git remote or directory name) so each project gets a unique Obsidian vault. The template uses `.brain/` as a placeholder — the init script does `sed` replacements to substitute the actual name in CLAUDE.md, MCP config, and gitignore entries.
-
 ## Hook Architecture
 
-Hooks live in `template/.brain/hooks/` and are configured as Claude Code hooks in `.claude/settings.json`:
+Hooks live in `template/.brain/hooks/` and are configured as Claude Code hooks in `.claude/settings.json`. Each hook is a shell wrapper (`.sh`) that may call a Node.js script (`.mjs`) for the heavy lifting.
 
 | Hook | Trigger | Purpose |
 |------|---------|---------|
-| `brain-router.sh` | `UserPromptSubmit` | Advisory: warns if brain files lack YAML frontmatter |
-| `brain-index-updater.sh` | `PostToolUse` (Write\|Edit) | Rebuilds brain-index.json when brain files change |
+| `session-orient.sh` | `UserPromptSubmit` | Prints orientation context (mission, top-of-mind, brain stats) on session start |
+| `brain-router.sh` | `PreToolUse` (Write\|Edit) | Advisory: warns if brain files lack YAML frontmatter; also detects and surfaces auto-populate prompts |
+| `brain-index-updater.sh` | `PostToolUse` (Write\|Edit) | Rebuilds brain-index.json when brain files change, auto-links new notes into MOCs via `auto-link-note.mjs` |
 | `session-eval-prompt.sh` | `Stop` | Generates session evaluation prompt at end of session |
 
 Supporting scripts (not hooks, but called by hooks or directly):
-- `rebuild-brain-index.sh` / `rebuild-brain-index.mjs` — full index rebuild
-- `brain-search.mjs` — search the brain index
-- `brain-validator.mjs` — validate note frontmatter
-- `brain-graph.mjs` — graph operations
+- `rebuild-brain-index.sh` / `rebuild-brain-index.mjs` — full index rebuild (v3 format with backlinks, age, title-boosted keywords)
+- `brain-search.mjs` — weighted search with fuzzy matching against brain index
+- `brain-validator.mjs` — validate note frontmatter (YAML parsing)
+- `brain-graph.mjs` — graph analysis (orphan detection, connectivity)
+- `auto-link-note.mjs` — auto-links new notes into the relevant MOC (called by `brain-index-updater.sh`)
+- `brain-health-report.sh` — vault health summary
+
+## Bootstrap Data Flow
+
+The `--bootstrap` flag runs a two-stage pipeline:
+
+1. **Scan** (`bootstrap-scan.mjs`): reads README, package.json, git history, ADRs, CLAUDE.md, Claude memory files → writes a JSON manifest to `.brain*/inbox/queue-generated/bootstrap-scan.json`
+2. **Populate** (`bootstrap-populate.mjs`): reads the manifest → generates brain notes with `[BOOTSTRAPPED — REVIEW]` warnings in frontmatter
+
+The `--auto` flag adds a third stage: `auto-populate-prompt.mjs` generates a prompt file at `.brain*/hooks/.state/auto-populate-prompt.md` which `brain-router.sh` surfaces once and then renames to `.done`.
+
+## Template Substitution
+
+The template uses `.brain/` as a placeholder directory name. During install, `init-second-brain.sh` runs `sed` replacements across `CLAUDE-second-brain.md`, `mcp-servers.json`, and `gitignore-entries.txt` to substitute `.brain_<project-name>/` (derived from git remote or directory basename). This means each project gets a uniquely-named Obsidian vault.
 
 ## Development Guidelines
 
@@ -71,15 +94,22 @@ Supporting scripts (not hooks, but called by hooks or directly):
 ## Running Tests
 
 ```bash
-# Run full test suite (Node.js + shell)
+# Run full test suite (Node.js + shell) — 161 tests total
 bash tests/run-all.sh
 
-# Run only Node.js tests (indexer, router, bootstrap)
-node --test tests/test-indexer.mjs tests/test-router.mjs tests/test-bootstrap.mjs
+# Run all Node.js tests (148 tests: indexer, router, bootstrap, search, validator, graph, auto-populate, integration)
+node --test tests/test-indexer.mjs tests/test-router.mjs tests/test-bootstrap.mjs tests/test-search.mjs tests/test-validator.mjs tests/test-graph.mjs tests/test-auto-populate.mjs tests/test-integration.mjs
 
-# Run only shell tests (init script)
+# Run a single test file
+node --test tests/test-search.mjs
+
+# Run only shell tests (init script, 13 tests)
 bash tests/test-init.sh
 ```
+
+All tests use Node.js built-in test runner (`node:test`) — no test framework dependency. Shell tests use a custom assert helper in `test-init.sh`.
+
+**Note:** `run-all.sh` runs Node.js tests twice (once for results, once to count). This is a known quirk — if tests are slow, run individual files instead.
 
 ## Manual Testing
 
@@ -95,6 +125,10 @@ mkdir /tmp/test-project && cd /tmp/test-project && git init
 /path/to/scripts/init-second-brain.sh .
 ```
 
+
+---
+
+> **Below this line**: Vault operating instructions installed by `init-second-brain.sh` from `template/CLAUDE-second-brain.md`. These are the agent-facing protocols for using the `.brain_second-brain-project/` vault in this repo. Edit the source template when making changes that should propagate to all installations.
 
 # Second Brain — Claude Code Instructions
 

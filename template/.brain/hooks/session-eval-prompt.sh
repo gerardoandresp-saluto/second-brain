@@ -23,6 +23,12 @@ STATE_DIR="$BRAIN_DIR/hooks/.state"
 TODAY=$(date +%Y-%m-%d)
 MAX_FILES=20
 
+# ── Error logging ─────────────────────────────────────────────────
+LOG_FILE="$STATE_DIR/hook-errors.log"
+log_error() {
+  echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] session-eval-prompt: $1" >> "$LOG_FILE" 2>/dev/null
+}
+
 # ── Determine session start time ────────────────────────────────────
 SESSION_START_TS=""
 if [ -f "$STATE_DIR/session-start-ts" ]; then
@@ -250,7 +256,7 @@ echo ""
 
 # ── Rebuild index one final time ────────────────────────────────────
 if command -v node &>/dev/null; then
-  node "$BRAIN_DIR/hooks/rebuild-brain-index.mjs" "$BRAIN_DIR" 2>/dev/null
+  node "$BRAIN_DIR/hooks/rebuild-brain-index.mjs" "$BRAIN_DIR" 2>&1 || log_error "Final index rebuild failed"
 fi
 
 # ── Clean up session state ──────────────────────────────────────────

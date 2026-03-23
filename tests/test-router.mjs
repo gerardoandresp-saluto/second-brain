@@ -84,6 +84,15 @@ describe("Path filtering", () => {
     assert.equal(result.stderr, "");
     assert.equal(result.exitCode, 0);
   });
+
+  it(".brain_projectname/ paths are matched (not just .brain/)", () => {
+    const result = runRouter({
+      tool_name: "Write",
+      tool_input: { path: "/project/.brain_my-project/knowledge/graph/research/note.md", content: "No frontmatter" }
+    });
+    assert.ok(result.stderr.includes("[brain-router]"), "Should produce advisory for .brain_* paths");
+    assert.equal(result.exitCode, 0);
+  });
 });
 
 // ── 2. Frontmatter Validation ───────────────────────────────────────
@@ -274,5 +283,18 @@ describe("Path-type matching", () => {
     assert.ok(result.stderr.includes("map"), "Should mention expected types");
     assert.ok(result.stderr.includes("moc"), "Should mention expected types");
     assert.ok(result.stderr.includes("atlas"), "Should mention expected types");
+  });
+
+  it("path-type rules work with .brain_projectname/ paths", () => {
+    const result = runRouter({
+      tool_name: "Write",
+      tool_input: {
+        path: "/project/.brain_my-project/knowledge/graph/research/note.md",
+        content: "---\ntype: session\n---\nBody"
+      }
+    });
+    // session type in knowledge/graph/ should produce advisory (expects claim or research)
+    assert.ok(result.stderr.includes("session"), "Should flag mismatched type");
+    assert.ok(result.stderr.includes("claim"), "Should suggest expected types");
   });
 });

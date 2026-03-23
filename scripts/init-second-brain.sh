@@ -626,6 +626,77 @@ else
 fi
 
 # ══════════════════════════════════════════════════════════════════════
+# 8. POST-INSTALL HEALTH VERIFICATION
+# ══════════════════════════════════════════════════════════════════════
+echo ""
+echo "── Health Verification ──────────────────────────────────"
+
+HEALTH_ISSUES=0
+
+# Critical: hook scripts exist and are executable
+for hook in session-orient.sh brain-index-updater.sh session-eval-prompt.sh brain-router.sh; do
+    if [ ! -f "$BRAIN_DIR/hooks/$hook" ]; then
+        print_error "Missing hook script: hooks/$hook"
+        HEALTH_ISSUES=$((HEALTH_ISSUES + 1))
+    elif [ ! -x "$BRAIN_DIR/hooks/$hook" ]; then
+        print_warning "Hook not executable: hooks/$hook (fixing...)"
+        chmod +x "$BRAIN_DIR/hooks/$hook"
+    fi
+done
+
+# Critical: Node.js modules exist
+for module in rebuild-brain-index.mjs brain-search.mjs brain-validator.mjs brain-graph.mjs auto-link-note.mjs brain-router.mjs; do
+    if [ ! -f "$BRAIN_DIR/hooks/$module" ]; then
+        print_error "Missing module: hooks/$module"
+        HEALTH_ISSUES=$((HEALTH_ISSUES + 1))
+    fi
+done
+
+# Critical: brain-index.json was built
+if [ ! -f "$BRAIN_DIR/brain-index.json" ]; then
+    print_error "brain-index.json was not created — memory routing will not work"
+    HEALTH_ISSUES=$((HEALTH_ISSUES + 1))
+elif [ ! -s "$BRAIN_DIR/brain-index.json" ]; then
+    print_error "brain-index.json is empty — memory routing will not work"
+    HEALTH_ISSUES=$((HEALTH_ISSUES + 1))
+fi
+
+# High: key content files
+for file in goal/mission.md goal/principles.md 00-home/index.md 00-home/top-of-mind.md; do
+    if [ ! -f "$BRAIN_DIR/$file" ]; then
+        print_warning "Missing content file: $file"
+        HEALTH_ISSUES=$((HEALTH_ISSUES + 1))
+    fi
+done
+
+# High: templates directory populated
+TEMPLATE_COUNT=$(ls "$BRAIN_DIR/_assets/templates/"*.md 2>/dev/null | wc -l | tr -d ' ')
+if [ "$TEMPLATE_COUNT" -eq 0 ]; then
+    print_error "No templates found in _assets/templates/ — note creation will lack structure"
+    HEALTH_ISSUES=$((HEALTH_ISSUES + 1))
+fi
+
+# High: critical directories exist
+for dir in sessions knowledge/graph knowledge/memory inbox/queue-generated 00-home/daily atlas; do
+    if [ ! -d "$BRAIN_DIR/$dir" ]; then
+        print_warning "Missing directory: $dir"
+        HEALTH_ISSUES=$((HEALTH_ISSUES + 1))
+    fi
+done
+
+# High: hooks state directory
+if [ ! -d "$BRAIN_DIR/hooks/.state" ]; then
+    print_warning "Missing hooks/.state directory (creating...)"
+    mkdir -p "$BRAIN_DIR/hooks/.state"
+fi
+
+if [ "$HEALTH_ISSUES" -eq 0 ]; then
+    print_success "Health check passed — all critical files present"
+else
+    print_warning "Health check found $HEALTH_ISSUES issue(s) — review above"
+fi
+
+# ══════════════════════════════════════════════════════════════════════
 # DONE
 # ══════════════════════════════════════════════════════════════════════
 echo ""

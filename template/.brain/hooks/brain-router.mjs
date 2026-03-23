@@ -6,13 +6,13 @@
 import { createInterface } from "readline";
 
 const PATH_TYPE_RULES = [
-  { pattern: /\/.brain\/knowledge\/graph\//,  expected: ["claim", "research"] },
-  { pattern: /\/.brain\/knowledge\//,          expected: ["concept", "claim", "research", "reference"] },
-  { pattern: /\/.brain\/sessions\//,           expected: ["session"] },
-  { pattern: /\/.brain\/atlas\//,              expected: ["map", "moc", "atlas"] },
-  { pattern: /\/.brain\/goal\//,               expected: ["goal", "project"] },
-  { pattern: /\/.brain\/inbox\//,              expected: ["inbox", "fleeting"] },
-  { pattern: /\/.brain\/voice-notes\//,        expected: ["voice-note", "fleeting"] },
+  { pattern: /\/.brain[^/]*\/knowledge\/graph\//,  expected: ["claim", "research"] },
+  { pattern: /\/.brain[^/]*\/knowledge\//,          expected: ["concept", "claim", "research", "reference"] },
+  { pattern: /\/.brain[^/]*\/sessions\//,           expected: ["session"] },
+  { pattern: /\/.brain[^/]*\/atlas\//,              expected: ["map", "moc", "atlas"] },
+  { pattern: /\/.brain[^/]*\/goal\//,               expected: ["goal", "project"] },
+  { pattern: /\/.brain[^/]*\/inbox\//,              expected: ["inbox", "fleeting"] },
+  { pattern: /\/.brain[^/]*\/voice-notes\//,        expected: ["voice-note", "fleeting"] },
 ];
 
 function parseFrontmatter(content) {
@@ -55,7 +55,7 @@ async function readStdin() {
   const filePath = toolInput.path ?? toolInput.file_path ?? "";
   const content = toolInput.content ?? "";
 
-  if (!filePath.includes("/.brain/")) process.exit(0);
+  if (!/\/.brain[^/]*\//.test(filePath)) process.exit(0);
   if (!filePath.endsWith(".md")) process.exit(0);
   if (toolName !== "Write") process.exit(0);
 

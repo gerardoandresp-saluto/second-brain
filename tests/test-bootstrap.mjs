@@ -148,7 +148,8 @@ describe("Scanner", () => {
       const manifest = runScanner(dir);
       assert.equal(manifest.readme, null);
       assert.deepEqual(manifest.techStack, []);
-      assert.equal(manifest.project.name, undefined);
+      // Scanner falls back to basename of project dir when no package.json/git
+      assert.ok(typeof manifest.project.name === "string");
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
