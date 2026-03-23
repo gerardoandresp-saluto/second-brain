@@ -1,0 +1,6 @@
+.brain/.obsidian/workspace.json
+.brain/.obsidian/workspace-mobile.json
+.brain/.obsidian/plugins/*/data.json
+.brain/.obsidian/cache
+.brain/.trash/
+.brain/hooks/.state/

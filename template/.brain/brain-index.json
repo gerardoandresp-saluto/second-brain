@@ -1,0 +1,211 @@
+{
+  "version": 3,
+  "updated": "2026-03-23T00:15:12.501Z",
+  "note_count": 8,
+  "entries": [
+    {
+      "p": "00-home/index.md",
+      "m": "working",
+      "moc": false,
+      "t": [],
+      "k": [],
+      "bk": [
+        "index",
+        "atlas",
+        "entry",
+        "goal",
+        "session",
+        "projects",
+        "research",
+        "vault",
+        "link",
+        "knowledge"
+      ],
+      "s": "This is the entry point. Start here.",
+      "l": [
+        "goal/mission",
+        "goal/principles",
+        "top-of-mind",
+        "atlas/projects",
+        "atlas/research",
+        "docs/README",
+        "atlas/vault-information-arch"
+      ],
+      "lc": 7,
+      "bl": [],
+      "age": 3
+    },
+    {
+      "p": "00-home/top-of-mind.md",
+      "m": "working",
+      "moc": false,
+      "t": [],
+      "k": [],
+      "bk": [
+        "mind",
+        "active",
+        "right",
+        "update",
+        "start",
+        "session",
+        "projects",
+        "open",
+        "questions",
+        "blocked"
+      ],
+      "s": "_What's active right now? Update this at the start and end of each session._",
+      "l": [],
+      "lc": 0,
+      "bl": [
+        "index"
+      ],
+      "age": 3
+    },
+    {
+      "p": "atlas/projects.md",
+      "m": "working",
+      "moc": false,
+      "t": [],
+      "k": [],
+      "bk": [
+        "projects",
+        "tracked",
+        "link",
+        "project",
+        "context",
+        "notes",
+        "active",
+        "paused",
+        "completed"
+      ],
+      "s": "_Map of all tracked projects. Link to project context notes._",
+      "l": [],
+      "lc": 0,
+      "bl": [],
+      "age": 3
+    },
+    {
+      "p": "atlas/research.md",
+      "m": "working",
+      "moc": false,
+      "t": [],
+      "k": [],
+      "bk": [
+        "research",
+        "threads",
+        "knowledge",
+        "areas",
+        "active",
+        "completed",
+        "parking",
+        "ideas",
+        "worth",
+        "exploring"
+      ],
+      "s": "_Map of research threads and knowledge areas._",
+      "l": [],
+      "lc": 0,
+      "bl": [],
+      "age": 3
+    },
+    {
+      "p": "atlas/vault-information-arch.md",
+      "m": "working",
+      "moc": false,
+      "t": [],
+      "k": [],
+      "bk": [
+        "vault",
+        "information",
+        "session",
+        "arch",
+        "knowledge",
+        "notes",
+        "never",
+        "memory",
+        "read",
+        "without"
+      ],
+      "s": "| Folder | Purpose |",
+      "l": [
+        "memory graphs beat giant memory files",
+        "benchmark retrieval like search infrastructure"
+      ],
+      "lc": 2,
+      "bl": [],
+      "age": 3
+    },
+    {
+      "p": "docs/README.md",
+      "m": "working",
+      "moc": false,
+      "t": [],
+      "k": [],
+      "bk": [
+        "readme",
+        "agents",
+        "docs",
+        "knowledge",
+        "brain",
+        "contains",
+        "settled",
+        "claims",
+        "authoritative",
+        "change"
+      ],
+      "s": "This folder contains **stable reference documentation** — settled knowledge that agents can consult ",
+      "l": [],
+      "lc": 0,
+      "bl": [],
+      "age": 3
+    },
+    {
+      "p": "goal/mission.md",
+      "m": "working",
+      "moc": false,
+      "t": [],
+      "k": [],
+      "bk": [
+        "mission",
+        "project",
+        "saying",
+        "define",
+        "north",
+        "star",
+        "thing",
+        "doesn",
+        "change",
+        "statement"
+      ],
+      "s": "_Define the north star for this project. This is the ONE thing that doesn't change._",
+      "l": [],
+      "lc": 0,
+      "bl": [],
+      "age": 3
+    },
+    {
+      "p": "goal/principles.md",
+      "m": "working",
+      "moc": false,
+      "t": [],
+      "k": [],
+      "bk": [
+        "principles",
+        "core",
+        "guide",
+        "decision",
+        "options",
+        "seem",
+        "equal",
+        "break",
+        "think",
+        "problems"
+      ],
+      "s": "_These guide every decision. When two options seem equal, these break the tie._",
+      "l": [],
+      "lc": 0,
+      "bl": [],
+      "age": 3
+    }
+  ]
+}
