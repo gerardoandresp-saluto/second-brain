@@ -36,10 +36,27 @@ function parseFrontmatter(content) {
   if (end === -1) return null;
   const block = content.slice(4, end);
   const fields = {};
+  let currentKey = null;
   for (const line of block.split("\n")) {
+    // Key: value line
     const m = line.match(/^(\w[\w-]*):\s*(.*)$/);
-    if (!m) continue;
-    fields[m[1].trim()] = m[2].trim();
+    if (m) {
+      currentKey = m[1].trim();
+      const val = m[2].trim();
+      fields[currentKey] = val;
+      continue;
+    }
+    // YAML list item (  - value) — means the key has content even if the key line was empty
+    const listItem = line.match(/^\s+-\s+(.+)$/);
+    if (listItem && currentKey) {
+      // Mark the field as having list content
+      if (!fields[currentKey]) fields[currentKey] = [];
+      if (typeof fields[currentKey] === "string" && !fields[currentKey]) {
+        fields[currentKey] = [listItem[1].trim()];
+      } else if (Array.isArray(fields[currentKey])) {
+        fields[currentKey].push(listItem[1].trim());
+      }
+    }
   }
   return fields;
 }
@@ -76,7 +93,9 @@ export function validate(brainDir) {
     }
 
     for (const field of REQUIRED_FRONTMATTER) {
-      if (!note.fm[field] && field !== "keywords") {
+      const val = note.fm[field];
+      const isEmpty = val === undefined || val === null || val === "" || (Array.isArray(val) && val.length === 0);
+      if (isEmpty && field !== "keywords") {
         issues.push({ type: "missing-field", path: relPath, severity: "warning",
           message: `Missing required field: ${field}` });
       }
